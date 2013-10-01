@@ -13,6 +13,7 @@ public class Chase extends WindowController {
 	// Generators to get new x and y coords.
 	private RandomIntGenerator randXGen, randYGen;
 	private boolean playing; // Is player playing or waiting to start
+
 	// Set up timer and funny face for game
 
 	public void begin() {
@@ -48,8 +49,7 @@ public class Chase extends WindowController {
 			hat.changeColor();
 			stopWatch.reset();
 		} else if (stopWatch.elapsedSeconds() <= TIME_LIMIT) { // got it in time
-																// playing =
-																// false;
+			playing = false;
 			infoText.setText("You got the FunnyFace in time. Click to restart.");
 		} else { // user was too slow
 			infoText.setText("Too slow!");
