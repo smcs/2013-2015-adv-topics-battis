@@ -29,6 +29,11 @@ public class Pencil {
 		isSharp = false;
 	}
 	
+	/**
+	 * Detailed Constructor
+	 * @param newLength
+	 * @param sharpness
+	 */
 	public Pencil(int newLength, boolean sharpness) {
 		length = newLength;
 		isSharp = sharpness;
