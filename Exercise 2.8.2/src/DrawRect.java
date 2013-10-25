@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class DrawRect extends WindowController {
 	private FramedRect frame;
-
+	
 	public void onMousePress(Location point) {
 		frame = new FramedRect(point, 100, 100, canvas);
 	}
