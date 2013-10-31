@@ -1,8 +1,6 @@
 import objectdraw.*;
 
 public class Bullet extends GameObject {
-	private static final double BULLET_SIZE = 3;
-	private static final double BULLET_VELOCITY = 3;
 	
 	private FilledOval body;
 	private GameObject[] gameObjects;
@@ -13,10 +11,10 @@ public class Bullet extends GameObject {
 	public Bullet (Tank aTank, Location aLocation, Velocity aVelocity, GameObject[] someGameObjects, TankWars aGame) {
 		source = aTank;
 		velocity = new Velocity(aVelocity);
-		velocity.setSpeed(velocity.getSpeed() + BULLET_VELOCITY);
+		velocity.setSpeed(velocity.getSpeed() + TankWars.BULLET_VELOCITY);
 		gameObjects = someGameObjects;
 		game = aGame;
-		body = new FilledOval(aLocation, BULLET_SIZE, BULLET_SIZE, game.getCanvas());
+		body = new FilledOval(aLocation, TankWars.BULLET_SIZE, TankWars.BULLET_SIZE, game.getCanvas());
 		body.setColor(source.getColor());
 		
 		start();
@@ -46,7 +44,7 @@ public class Bullet extends GameObject {
 					}
 				}
 			}
-			pause(game.REFRESH_RATE);
+			pause(TankWars.REFRESH_RATE);
 		}
 		
 		body.removeFromCanvas();

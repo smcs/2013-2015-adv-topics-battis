@@ -6,7 +6,6 @@ public class Tank extends GameObject implements KeyListener {
 	
 	private FilledOval body;
 	private Line barrel;
-	private Color color;
 	
 	private TankWars game;
 	private ControlSet controls;
@@ -21,15 +20,13 @@ public class Tank extends GameObject implements KeyListener {
 		
 		controls = aControlSet;
 		gameObjects = someGameObjects;		
-		bullets = new Bullet[game.NUM_BULLETS];
+		bullets = new Bullet[TankWars.NUM_BULLETS];
 		velocity = new Velocity();
 		
-		RandomIntGenerator colorGen = new RandomIntGenerator(0, 200);
-		color = new Color(colorGen.nextValue(), colorGen.nextValue(), colorGen.nextValue());
-		body = new FilledOval(0, 0, game.TANK_SIZE, game.TANK_SIZE, game.getCanvas());
+		body = new FilledOval(0, 0, TankWars.TANK_SIZE, TankWars.TANK_SIZE, game.getCanvas());
 		barrel = new Line (0, 0, 0, 0, game.getCanvas());
-		body.setColor(color);
-		barrel.setColor(color);
+		body.setColor(generateRandomColor());
+		barrel.setColor(body.getColor());
 
 		reset();
 		start();
@@ -56,20 +53,20 @@ public class Tank extends GameObject implements KeyListener {
 			if (body.getX() < 0 || body.getY() < 0 || body.getX() > game.getCanvas().getWidth() || body.getY() > game.getCanvas().getHeight()) {
 				velocity.setSpeed(0);
 			}
-			pause(game.REFRESH_RATE);
+			pause(TankWars.REFRESH_RATE);
 		}
 	}
 
 	public void reset() {
 		double minimumDistance = 0;
 		double distance = 0;
-		RandomDoubleGenerator widthGen = new RandomDoubleGenerator(game.MARGIN, game.getCanvas().getWidth() - game.MARGIN);
-		RandomDoubleGenerator heightGen = new RandomDoubleGenerator(game.MARGIN, game.getCanvas().getHeight() - game.MARGIN);
+		RandomDoubleGenerator widthGen = new RandomDoubleGenerator(TankWars.MARGIN, game.getCanvas().getWidth() - TankWars.MARGIN);
+		RandomDoubleGenerator heightGen = new RandomDoubleGenerator(TankWars.MARGIN, game.getCanvas().getHeight() - TankWars.MARGIN);
 		RandomIntGenerator angleGen = new RandomIntGenerator(0, 360);
 		Location location = new Location(0, 0), other;
 
-		while (minimumDistance < game.MARGIN) {
-			minimumDistance = game.MARGIN;
+		while (minimumDistance < TankWars.MARGIN) {
+			minimumDistance = TankWars.MARGIN;
 			location = new Location (widthGen.nextValue(), heightGen.nextValue());
 			for (int i = 0; i < gameObjects.length; i++) {
 				if (gameObjects[i] != null && gameObjects[i] != this) {
@@ -83,7 +80,7 @@ public class Tank extends GameObject implements KeyListener {
 		}
 		body.moveTo(location);
 		velocity = new Velocity();
-		velocity.setAngle(game.ANGLE_INCREMENT * angleGen.nextValue());
+		velocity.setAngle(TankWars.ANGLE_INCREMENT * angleGen.nextValue());
 		alignBarrel();
 	}
 	
@@ -93,16 +90,16 @@ public class Tank extends GameObject implements KeyListener {
 		
 		switch (command) {
 		case ControlSet.LEFT:
-			velocity.setAngle(velocity.getAngle() - game.ANGLE_INCREMENT);
+			velocity.setAngle(velocity.getAngle() - TankWars.ANGLE_INCREMENT);
 			break;
 		case ControlSet.RIGHT:
-			velocity.setAngle(velocity.getAngle() + game.ANGLE_INCREMENT);
+			velocity.setAngle(velocity.getAngle() + TankWars.ANGLE_INCREMENT);
 			break;
 		case ControlSet.UP:
-			velocity.setSpeed(velocity.getSpeed() + game.SPEED_INCREMENT);
+			velocity.setSpeed(velocity.getSpeed() + TankWars.SPEED_INCREMENT);
 			break;
 		case ControlSet.DOWN:
-			velocity.setSpeed(velocity.getSpeed() - game.SPEED_INCREMENT);
+			velocity.setSpeed(velocity.getSpeed() - TankWars.SPEED_INCREMENT);
 			break;
 		case ControlSet.FIRE:
 			for(int i = 0; i < bullets.length; i++) {
@@ -140,18 +137,23 @@ public class Tank extends GameObject implements KeyListener {
 		return body.overlaps(other);
 	}
 	
+	/**
+	 * 
+	 * @param dx
+	 * @param dy
+	 */
 	public void move(double dx, double dy) {
 		body.move(dx, dy);
 		barrel.move(dx, dy);
 	}
 	
 	private void alignBarrel() {
-		barrel.setStart(body.getX() + game.TANK_SIZE / 2, body.getY() + game.TANK_SIZE / 2);
-		barrel.setEnd(barrel.getStart().getX() + (game.TANK_SIZE / 2 + game.BARREL_LENGTH) * Math.cos(velocity.getAngle()), barrel.getStart().getY() + (game.TANK_SIZE / 2 + game.BARREL_LENGTH) * Math.sin(velocity.getAngle()));
+		barrel.setStart(body.getX() + TankWars.TANK_SIZE / 2, body.getY() + TankWars.TANK_SIZE / 2);
+		barrel.setEnd(barrel.getStart().getX() + (TankWars.TANK_SIZE / 2 + TankWars.BARREL_LENGTH) * Math.cos(velocity.getAngle()), barrel.getStart().getY() + (TankWars.TANK_SIZE / 2 + TankWars.BARREL_LENGTH) * Math.sin(velocity.getAngle()));
 	}
 	
 	public Color getColor() {
-		return color;
+		return body.getColor();
 	}
 	
 	public void expireBullet(Bullet bullet) {

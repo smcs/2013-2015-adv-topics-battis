@@ -1,21 +1,60 @@
 import objectdraw.*;
-import java.awt.*;
 import java.awt.event.*;
 
+@SuppressWarnings("serial")
 public class TankWars extends WindowController {
-	/*
-	 * Game parameters
+	
+	/**
+	 * The number of tanks playing the game.
 	 */
 	public static final int NUM_TANKS = 3;
+	
+	/**
+	 * The number of bullets allowed per tank.
+	 */
 	public static final int NUM_BULLETS = 10;
+	
+	/**
+	 * How frequently (in milliseconds) should the animated objects refresh their positions?
+	 */
 	public static final int REFRESH_RATE = 10;
+	
+	/**
+	 * How close can tanks be regenerated to the edge of the canvas or to each other?
+	 */
 	public static final double MARGIN = 15;
+	
+	/**
+	 * The amount that a tank's speed is increased/decreased by up/down keys.
+	 */
 	public static final double SPEED_INCREMENT = .1;
+	
+	/**
+	 * The amount that a tank's direction is altered by left/right keys (in radians).
+	 */
 	public static final double ANGLE_INCREMENT = Math.PI / 20;
+	
+	/**
+	 * The diameter of a tank (in pixels).
+	 */
 	public static final double TANK_SIZE = 10;
+	
+	/**
+	 * The length of the cannon barrel (in pixels);
+	 */
 	public static final double BARREL_LENGTH = 5;
 	
-	/*
+	/**
+	 * The diameter of an individual bullet (in pixels).
+	 */
+	public static final double BULLET_SIZE = 3;
+	
+	/**
+	 * The additional speed imparted to a bullet (in addition to the firing tank's velocity).
+	 */
+	public static final double BULLET_VELOCITY = 3;
+	
+	/**
 	 * All the things in the game that can collide with each other (and
 	 * with bullets)
 	 */
@@ -41,10 +80,18 @@ public class TankWars extends WindowController {
 		}
 	}
 	
+	/**
+	 * Canvas accessor method.
+	 * @return a reference to the game's canvas.
+	 */
 	public DrawingCanvas getCanvas() {
 		return canvas;
 	}
-	
+
+	/**
+	 * Is the game over?
+	 * @return true if a tank has won.
+	 */
 	public boolean isGameOver() {
 		return false;
 	}
