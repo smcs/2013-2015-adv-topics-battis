@@ -1,22 +1,40 @@
 import objectdraw.*;
 import java.awt.*;
 
+/**
+ * An object that can be involved in a collision.
+ * 
+ * @author Seth Battis
+ */
 public class GameObject extends ActiveObject {
 
+	/**
+	 * @param other Another object on the canvas.
+	 * @return True if the other object visually overlaps with this game object.
+	 */
 	public boolean overlaps(FilledRect other) {
 		return false;
 	}
 	
+	/**
+	 * @param other Another object on the canvas.
+	 * @return True if the other object visually overlaps with this game object.
+	 */
 	public boolean overlaps(FilledOval other) {
 		return false;
 	}
-	
+
+	/**
+	 * @return The current location of this game object.
+	 */
 	public Location getLocation() {
 		return null;
 	}
 	
+	// TODO Find a better place for this method. Doesn't really belong in this class...
 	/**
-	 * http://stackoverflow.com/a/43235/294171
+	 * A handy helper function to generate a random color within a
+	 * specific palette. Code from {@link http://stackoverflow.com/a/43235/294171}
 	 * @param mix
 	 * @return
 	 */

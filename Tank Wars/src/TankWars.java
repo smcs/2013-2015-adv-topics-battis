@@ -98,6 +98,7 @@ public class TankWars extends WindowController {
 	 * @return true if a tank has won.
 	 */
 	public boolean isGameOver() {
+		// TODO figure out how to decide if a tank has won
 		return false;
 	}
 }
