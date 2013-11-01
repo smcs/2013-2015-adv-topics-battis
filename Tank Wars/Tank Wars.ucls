@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="TankWars" project="Tank Wars" file="/Tank Wars/src/TankWars.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="314" width="190" x="293" y="601"/>    
+    <position height="-1" width="-1" x="132" y="255"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="Tank" project="Tank Wars" file="/Tank Wars/src/Tank.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="332" width="254" x="208" y="229"/>    
+    <position height="-1" width="-1" x="495" y="444"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="GameObject" project="Tank Wars" file="/Tank Wars/src/GameObject.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="152" width="193" x="293" y="955"/>    
+    <position height="-1" width="-1" x="133" y="647"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="ControlSet" project="Tank Wars" file="/Tank Wars/src/ControlSet.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="314" width="169" x="42" y="601"/>    
+    <position height="-1" width="-1" x="846" y="452"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="Bullet" project="Tank Wars" file="/Tank Wars/src/Bullet.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="152" width="323" x="504" y="37"/>    
+    <position height="-1" width="-1" x="443" y="805"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,107 +48,125 @@
   </class>  
   <class id="6" language="java" name="Velocity" project="Tank Wars" file="/Tank Wars/src/Velocity.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="224" width="165" x="544" y="601"/>    
+    <position height="-1" width="-1" x="848" y="769"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <generalization id="7">    
-    <bendpoint x="262" y="601"/>    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
+  <class id="7" language="java" name="KeyWatcher" project="Tank Wars" file="/Tank Wars/src/KeyWatcher.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="808" y="174"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
   <association id="8">    
-    <bendpoint x="241" y="601"/>    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="9" name="gameObjects"/>      
-      <multiplicity id="10" minimum="0" maximum="2147483647"/>    
+      <attribute id="9" name="game"/>      
+      <multiplicity id="10" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="11">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="12" name="game"/>      
-      <multiplicity id="13" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="14">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="15" name="velocity"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="17">    
-    <bendpoint x="739" y="229"/>    
-    <bendpoint x="739" y="601"/>    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="18">    
-    <bendpoint x="513" y="229"/>    
-    <bendpoint x="513" y="601"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="19" name="gameObjects"/>      
-      <multiplicity id="20" minimum="0" maximum="2147483647"/>    
+      <attribute id="12" name="gameObjects"/>      
+      <multiplicity id="13" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="21">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="22" name="source"/>      
-      <multiplicity id="23" minimum="0" maximum="1"/>    
+  <generalization id="14">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="15">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="16" name="gameObjects"/>      
+      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="18">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="19" name="tank"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="24">    
-    <bendpoint x="534" y="229"/>    
+  <generalization id="21">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="22">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="25" name="velocity"/>      
-      <multiplicity id="26" minimum="0" maximum="1"/>    
+      <attribute id="23" name="velocity"/>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="27">    
+  <association id="25">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="28" name="bullets"/>      
-      <multiplicity id="29" minimum="0" maximum="2147483647"/>    
+      <attribute id="26" name="velocity"/>      
+      <multiplicity id="27" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="28">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="29" name="source"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="31">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="32" name="gameObjects"/>      
+      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="35" name="bullets"/>      
+      <multiplicity id="36" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="30">    
-    <bendpoint x="492" y="229"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="31" name="game"/>      
-      <multiplicity id="32" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="33">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="34" name="controls"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
+  <association id="37">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="38" name="controls"/>      
+      <multiplicity id="39" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="36">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="37" name="gameObjects"/>      
-      <multiplicity id="38" minimum="0" maximum="2147483647"/>    
+  <association id="40">    
+    <bendpoint x="240" y="247"/>    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="41" name="game"/>      
+      <multiplicity id="42" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="44" name="game"/>      
+      <multiplicity id="45" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
