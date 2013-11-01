@@ -1,11 +1,13 @@
 import java.awt.event.*;
 
 public class ControlSet {
+		
 	public static final int LEFT = 0;
 	public static final int RIGHT = 1;
 	public static final int UP = 2;
 	public static final int DOWN = 3;
 	public static final int FIRE = 4;
+	public static final int KEY_COUNT = 5;
 	public static final int ERROR = -1;
 	
 	private int leftKey = KeyEvent.VK_LEFT;

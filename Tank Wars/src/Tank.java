@@ -2,31 +2,29 @@ import objectdraw.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Tank extends GameObject implements KeyListener {
+public class Tank extends GameObject {
 	
 	private FilledOval body;
-	private Line barrel;
+	private Line cannon;
 	
 	private TankWars game;
-	private ControlSet controls;
 	private GameObject[] gameObjects;
 	private Bullet[] bullets;
 	private Velocity velocity;
 
 	public Tank(TankWars aGame, ControlSet aControlSet, GameObject[] someGameObjects) {		
 		game = aGame;
-		game.addKeyListener(this);
-		game.getCanvas().addKeyListener(this);
 		
-		controls = aControlSet;
+		new KeyWatcher(this, aControlSet, game);
+		
 		gameObjects = someGameObjects;		
 		bullets = new Bullet[TankWars.NUM_BULLETS];
 		velocity = new Velocity();
 		
 		body = new FilledOval(0, 0, TankWars.TANK_SIZE, TankWars.TANK_SIZE, game.getCanvas());
-		barrel = new Line (0, 0, 0, 0, game.getCanvas());
+		cannon = new Line (0, 0, 0, 0, game.getCanvas());
 		body.setColor(generateRandomColor());
-		barrel.setColor(body.getColor());
+		cannon.setColor(body.getColor());
 
 		reset();
 		start();
@@ -84,47 +82,31 @@ public class Tank extends GameObject implements KeyListener {
 		alignBarrel();
 	}
 	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int command = controls.getCommand(e.getKeyCode());
-		
-		switch (command) {
-		case ControlSet.LEFT:
-			velocity.setAngle(velocity.getAngle() - TankWars.ANGLE_INCREMENT);
-			break;
-		case ControlSet.RIGHT:
-			velocity.setAngle(velocity.getAngle() + TankWars.ANGLE_INCREMENT);
-			break;
-		case ControlSet.UP:
-			velocity.setSpeed(velocity.getSpeed() + TankWars.SPEED_INCREMENT);
-			break;
-		case ControlSet.DOWN:
-			velocity.setSpeed(velocity.getSpeed() - TankWars.SPEED_INCREMENT);
-			break;
-		case ControlSet.FIRE:
-			for(int i = 0; i < bullets.length; i++) {
-				if (bullets[i] == null) {
-					bullets[i] = new Bullet(this, barrel.getEnd(), velocity, gameObjects, game);
-					break;
-				}
-			}
-			break;
-		default:
-		}
-		
+	public void turnLeft() {
+		velocity.setAngle(velocity.getAngle() - TankWars.ANGLE_INCREMENT);
 		alignBarrel();
 	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	
+	public void turnRight() {
+		velocity.setAngle(velocity.getAngle() + TankWars.ANGLE_INCREMENT);
+		alignBarrel();
 	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	
+	public void speedUp() {
+		velocity.setSpeed(velocity.getSpeed() + TankWars.SPEED_INCREMENT);
+	}
+	
+	public void slowDown() {
+		velocity.setSpeed(velocity.getSpeed() - TankWars.SPEED_INCREMENT);
+	}
+	
+	public void fire() {
+		for(int i = 0; i < bullets.length; i++) {
+			if (bullets[i] == null) {
+				bullets[i] = new Bullet(this, cannon.getEnd(), velocity, gameObjects, game);
+				break;
+			}
+		}
 	}
 	
 	@Override
@@ -144,12 +126,12 @@ public class Tank extends GameObject implements KeyListener {
 	 */
 	public void move(double dx, double dy) {
 		body.move(dx, dy);
-		barrel.move(dx, dy);
+		cannon.move(dx, dy);
 	}
 	
 	private void alignBarrel() {
-		barrel.setStart(body.getX() + TankWars.TANK_SIZE / 2, body.getY() + TankWars.TANK_SIZE / 2);
-		barrel.setEnd(barrel.getStart().getX() + (TankWars.TANK_SIZE / 2 + TankWars.BARREL_LENGTH) * Math.cos(velocity.getAngle()), barrel.getStart().getY() + (TankWars.TANK_SIZE / 2 + TankWars.BARREL_LENGTH) * Math.sin(velocity.getAngle()));
+		cannon.setStart(body.getX() + TankWars.TANK_SIZE / 2, body.getY() + TankWars.TANK_SIZE / 2);
+		cannon.setEnd(cannon.getStart().getX() + (TankWars.TANK_SIZE / 2 + TankWars.CANNON_LENGTH) * Math.cos(velocity.getAngle()), cannon.getStart().getY() + (TankWars.TANK_SIZE / 2 + TankWars.CANNON_LENGTH) * Math.sin(velocity.getAngle()));
 	}
 	
 	public Color getColor() {

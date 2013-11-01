@@ -20,6 +20,11 @@ public class TankWars extends WindowController {
 	public static final int REFRESH_RATE = 10;
 	
 	/**
+	 * How frequently should keys that are held down repeat (in milliseconds)?
+	 */
+	public static final int KEY_REPEAT_DELAY = 50;
+	
+	/**
 	 * How close can tanks be regenerated to the edge of the canvas or to each other?
 	 */
 	public static final double MARGIN = 15;
@@ -42,7 +47,7 @@ public class TankWars extends WindowController {
 	/**
 	 * The length of the cannon barrel (in pixels);
 	 */
-	public static final double BARREL_LENGTH = 5;
+	public static final double CANNON_LENGTH = 5;
 	
 	/**
 	 * The diameter of an individual bullet (in pixels).
