@@ -2,7 +2,7 @@ import objectdraw.*;
 
 public class World extends WindowController {
 	
-	public static final int FLOCK_SIZE = 150;
+	public static final int FLOCK_SIZE = 1000;
 	public static final int REFRESH_RATE = 10;
 	public static final int SUBFLOCK_SIZE = 10;
 	public static final int ITERATIONS = 1000;

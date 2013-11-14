@@ -2,15 +2,15 @@ import java.util.*;
 import objectdraw.*;
 
 public class FastFlock extends Flock {
-	public static final int DIVISIONS = 1;
+	public static final int DIVISIONS = 10;
 	protected LinkedList[][] locales;
 	protected double horizontalScale, verticalScale;
 	
 	public FastFlock(int flockSize, int iterations, DrawingCanvas canvas) {
 		super(flockSize, iterations, canvas);
 		
-		horizontalScale = canvas.getWidth() / DIVISIONS;
-		verticalScale = canvas.getHeight() / DIVISIONS;
+		horizontalScale = (double) canvas.getWidth() / (double) DIVISIONS;
+		verticalScale = (double) canvas.getHeight() / (double) DIVISIONS;
 		locales = new LinkedList[DIVISIONS][DIVISIONS];
 		for (int x = 0; x < locales.length; x++) {
 			for (int y = 0; y < locales[x].length; y++) {
@@ -85,9 +85,11 @@ public class FastFlock extends Flock {
 		LinkedList<Boid> subflock = new LinkedList<Boid>();
 		LinkedList<Boid> neighbors;
 		double distance, maxDistance = 0;
-		double ring = 0;
+		int neighborCircumference = 0;
+		boolean done = false;
 		do {
-			neighbors = ring(b, 0);
+			neighbors = ring(b, neighborCircumference);
+			System.out.printf("%d ", neighborCircumference);
 			ListIterator<Boid> neighborIterator = neighbors.listIterator();
 			while (neighborIterator.hasNext()) {
 				Boid neighbor = neighborIterator.next();
@@ -111,10 +113,17 @@ public class FastFlock extends Flock {
 					}
 				}
 			}
+			double xAlignment = (((b.getLocation().getX() % horizontalScale) / horizontalScale) % 0.5) * horizontalScale;
+			double yAlignment = (((b.getLocation().getY() % verticalScale) / verticalScale) % 0.5) * horizontalScale;
 			if (subflock.size() < size) {
-				ring++;
+				neighborCircumference++;
+			} else if (maxDistance > (horizontalScale * neighborCircumference) + xAlignment || maxDistance > (verticalScale * neighborCircumference) + yAlignment) {
+				neighborCircumference++;
+			} else {
+				done = true;
 			}
-		} while (subflock.size() < size);
+		} while (!done);
+		System.out.println();
 		return subflock.toArray(new Boid[0]);
 	}
 }

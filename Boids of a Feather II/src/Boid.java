@@ -92,15 +92,28 @@ public class Boid {
 		}
 	}
 	
-	private void step() {
+	private synchronized void step() {
 		if (!marginAvoidance()) {
 			flock();
 		}
+		Location oldLocation = new Location(location);
 		location.translate(
 				Math.cos(heading) * step,
 				Math.sin(heading) * step
 			);
-		canvas.repaint();
+		if (location.getX() < 0) {
+			location = new Location (0, location.getY());
+		} else if (location.getX() > canvas.getWidth()) {
+			location = new Location(0, canvas.getWidth() - 1);
+		}
+		if (location.getY() < 0) {
+			location = new Location(location.getX(), 0);
+		} else if (location.getY() > canvas.getHeight()) {
+			location = new Location(location.getX(), canvas.getHeight() - 1);
+		}
+		if (flock instanceof FastFlock) {
+			((FastFlock) flock).register(this, oldLocation);
+		}
 	}
 	
 	public void iteration() {
