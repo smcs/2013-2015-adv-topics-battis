@@ -16,9 +16,11 @@ public class Boid extends ActiveObject {
 	private Line body, leftWing, rightWing;
 	private double heading;
 	private double step;
+	private int iterations, maxIterations;
 	
-	public Boid(Flock f, DrawingCanvas c) {
+	public Boid(Flock f, int iterations, DrawingCanvas c) {
 		flock = f;
+		maxIterations = iterations;
 		canvas = c;
 
 		RandomIntGenerator widthGen = new RandomIntGenerator(0, canvas.getWidth());
@@ -118,6 +120,7 @@ public class Boid extends ActiveObject {
 	}
 	
 	private void step() {
+		iterations++;
 		if (!marginAvoidance()) {
 			flock();
 		}
@@ -128,11 +131,12 @@ public class Boid extends ActiveObject {
 	}
 	
 	public void run() {
-		while (true) {
+		while (iterations < maxIterations) {
 			step();
 			alignToHeading();
 			pause(World.REFRESH_RATE);
 		}
+		flock.reportFinished();
 	}
 	
 	public Location getLocation() {
