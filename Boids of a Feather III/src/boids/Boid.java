@@ -20,7 +20,10 @@ public class Boid {
 	location = new Location(generator.nextDouble() * canvas.getWidth(),
 		generator.nextDouble() * canvas.getHeight());
 	velocity = new Velocity(generator.nextDouble() * (Math.PI * 2),
-		environment.getMinimumSpeed() + generator.nextDouble() * (environment.getMaximumSpeed() - environment.getMinimumSpeed()));
+		environment.getMinimumSpeed()
+			+ generator.nextDouble()
+			* (environment.getMaximumSpeed() - environment
+				.getMinimumSpeed()));
 	new Icon(this, environment, canvas);
     }
 
@@ -42,7 +45,8 @@ public class Boid {
 	    cumulativeNeighborSpeed += b.getSpeed();
 	    cumulativeNeighborX += b.getX();
 	    cumulativeNeighborY += b.getY();
-	    if (Formulae.distance(location, b.getLocation()) < environment.getMinimumEnemyDistance()) {
+	    if (Formulae.distance(location, b.getLocation()) < environment
+		    .getMinimumEnemyDistance()) {
 		crashCount++;
 		cumulativeCrashX += b.getX();
 		cumulativeCrashY += b.getY();
@@ -94,22 +98,29 @@ public class Boid {
 	}
 
 	/* normalize our new weighted heading into just a heading */
-	newHeading = newHeading / weight;
+	if (weight > 0) {
+	    newHeading = newHeading / weight;
+	} else {
+	    newHeading = velocity.getAngle();
+	}
 
 	/*
-	 * adjust our current heading towards the new heading, within the
-	 * limits of our maximum turn angle
+	 * adjust our current heading towards the new heading, within the limits
+	 * of our maximum turn angle
 	 */
-	if (Math.abs(velocity.getAngle() - newHeading) < environment.getMaximumTurnAngle()) {
+	if (Math.abs(velocity.getAngle() - newHeading) < environment
+		.getMaximumTurnAngle()) {
 	    velocity.setAngle(newHeading);
 	} else if (newHeading < velocity.getAngle()) {
-	    velocity.setAngle(velocity.getAngle() - environment.getMaximumTurnAngle());
+	    velocity.setAngle(velocity.getAngle()
+		    - environment.getMaximumTurnAngle());
 	} else {
-	    velocity.setAngle(velocity.getAngle() + environment.getMaximumTurnAngle());
+	    velocity.setAngle(velocity.getAngle()
+		    + environment.getMaximumTurnAngle());
 	}
-	
+
 	// TODO adjust current speed to "go with the flow"
-	
+
 	location = Formulae.endPoint(location, velocity);
     }
 
@@ -140,5 +151,9 @@ public class Boid {
 
     public boolean isUpdating() {
 	return flock.isUpdating();
+    }
+
+    public Velocity getVelocity() {
+	return new Velocity(velocity);
     }
 }
