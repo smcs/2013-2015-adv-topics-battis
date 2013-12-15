@@ -15,7 +15,7 @@ public class Formulae {
 	return new Location(location.getX()
 		+ (velocity.getSpeed() * Math.cos(velocity.getAngle())),
 		location.getY()
-			+ (velocity.getSpeed() * Math.sin(velocity.getSpeed())));
+			+ (velocity.getSpeed() * Math.sin(velocity.getAngle())));
     }
 
     public static double heading(Location start, Location end) {
