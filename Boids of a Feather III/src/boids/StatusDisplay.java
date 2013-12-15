@@ -4,6 +4,9 @@ import objectdraw.*;
 
 public class StatusDisplay extends ActiveObject {
     
+    public static final double MARGIN = 5;
+    public static final double TEXT_HEIGHT = 15;
+    
     private Flock flock;
     private Environment environment;
     private DrawingCanvas canvas;
@@ -13,10 +16,10 @@ public class StatusDisplay extends ActiveObject {
 	this.flock = flock;
 	this.environment = environment;
 	this.canvas = canvas;
-	wallWeight = new Text (environment.getWallWeight(), 0, 0, canvas);
-	crashWeight = new Text (environment.getCrashWeight(), 0, 20, canvas);
-	friendsWeight = new Text (environment.getFriendsWeight(), 0, 40, canvas);
-	flowWeight = new Text (environment.getFlowWeight(), 0, 60, canvas);
+	wallWeight = new Text (environment.getWallWeight(), MARGIN, MARGIN, canvas);
+	crashWeight = new Text (environment.getCrashWeight(), MARGIN, MARGIN + TEXT_HEIGHT, canvas);
+	friendsWeight = new Text (environment.getFriendsWeight(), MARGIN, MARGIN + TEXT_HEIGHT * 2, canvas);
+	flowWeight = new Text (environment.getFlowWeight(), MARGIN, MARGIN + TEXT_HEIGHT * 3, canvas);
 	start();
     }
     
