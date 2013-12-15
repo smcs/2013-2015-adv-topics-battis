@@ -25,8 +25,4 @@ public class Velocity {
 	    this.angle = angle % (Math.PI * 2);
 	    return oldAngle;
 	}
-	
-	public String toString() {
-	    return new String(angle + ", " + speed);
-	}
 }

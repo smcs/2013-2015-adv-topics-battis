@@ -25,10 +25,10 @@ public class StatusDisplay extends ActiveObject {
     
     public void run() {
 	while (flock.isUpdating()) {
-	    wallWeight.setText(environment.getWallWeight());
-	    crashWeight.setText(environment.getCrashWeight());
-	    friendsWeight.setText(environment.getFriendsWeight());
-	    flowWeight.setText(environment.getFlowWeight());
+	    wallWeight.setText(environment.getWallWeight() + " * avoid walls");
+	    crashWeight.setText(environment.getCrashWeight() + " * avoid crashes");
+	    friendsWeight.setText(environment.getFriendsWeight() + " * find friends");
+	    flowWeight.setText(environment.getFlowWeight() + " * go with the flow");
 	    pause(environment.getIconRefreshDelay());
 	}
     }

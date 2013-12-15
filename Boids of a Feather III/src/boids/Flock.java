@@ -20,7 +20,7 @@ public class Flock extends ActiveObject {
     }
 
     public void run() {
-	for (int steps = 0; environment.getSimulationSteps() < 0 || steps < environment.getSimulationSteps(); steps++) {
+	for (int steps = 0; environment.getDuration() < 0 || steps < environment.getDuration(); steps++) {
 	    for (int i = 0; i < flock.size(); i++) {
 		flock.get(i).step();
 	    }
