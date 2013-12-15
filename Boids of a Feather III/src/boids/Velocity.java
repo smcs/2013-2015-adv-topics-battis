@@ -7,6 +7,11 @@ public class Velocity {
 		this.speed = speed;
 	}
 
+	public Velocity(Velocity other) {
+	    this.angle = other.angle;
+	    this.speed = other.speed;
+	}
+
 	public double getSpeed() {
 		return speed;
 	}
@@ -17,7 +22,11 @@ public class Velocity {
 
 	public double setAngle(double angle) {
 	    double oldAngle = this.angle;
-	    this.angle = angle;
+	    this.angle = angle % (Math.PI * 2);
 	    return oldAngle;
+	}
+	
+	public String toString() {
+	    return new String(angle + ", " + speed);
 	}
 }
