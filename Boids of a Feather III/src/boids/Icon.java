@@ -16,7 +16,7 @@ public class Icon extends ActiveObject {
 				environment.getIconHeight(), canvas);
 		caption1 = new Text("", boid.getLocation(), canvas);
 		caption2 = new Text("", boid.getLocation(), canvas);
-		if (!environment.captionsEnabled()) {
+		if (!environment.isCaptionsEnabled()) {
 			caption1.hide();
 			caption2.hide();
 		}
@@ -26,7 +26,7 @@ public class Icon extends ActiveObject {
 	public void run() {
 		while (boid.isUpdating()) {
 			icon.moveTo(boid.getLocation());
-			if (environment.captionsEnabled()) {
+			if (environment.isCaptionsEnabled()) {
 				caption1.setText(String.format("(%.1f, %.1f)", boid.getX(), boid.getY()));
 				caption2.setText(String.format("angle = %.1f / speed = %.1f", boid.getAngle(), boid.getSpeed()));
 				caption1.moveTo(boid.getX() + environment.getIconWidth(), boid.getY());

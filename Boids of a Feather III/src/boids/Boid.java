@@ -32,119 +32,157 @@ public class Boid {
 	}
 
 	public void step() {
-		Boid b;
-		double cumulativeNeighborAngle = 0, cumulativeNeighborSpeed = 0, cumulativeNeighborX = 0, cumulativeNeighborY = 0, cumulativeCrashX = 0, cumulativeCrashY = 0, newHeading, nextSpeed, weight = 0;
-		int crashCount = 0;
-		Velocity neighborVelocity;
-		Location neighborLocation, crashLocation, canvasCenter = new Location(
-				canvas.getWidth() / 2, canvas.getHeight() / 2), nextLocation = Formulae
-				.endPoint(location, velocity);
+		/* start by setting our new bearing as our current bearing */
+		double weight = 1;
+		double newBearing = velocity.getAngle();
 
-		/* examine the locations and velocities of our neighbors */
+		/*
+		 * a list of all of our neighbors who influence our navigational
+		 * decisions
+		 */
 		LinkedList<Boid> neighbors = flock.getNeighbors(this);
-		ListIterator<Boid> neighborsIterator = neighbors.listIterator();
-		while (neighborsIterator.hasNext()) {
-			b = neighborsIterator.next();
-			cumulativeNeighborAngle += b.getAngle();
-			cumulativeNeighborSpeed += b.getSpeed();
-			cumulativeNeighborX += b.getX();
-			cumulativeNeighborY += b.getY();
-			if (Formulae.distance(location, b.getLocation()) < environment
-					.getCrashRadius()) {
-				crashCount++;
-				cumulativeCrashX += b.getX();
-				cumulativeCrashY += b.getY();
-			}
-		}
-		/* average velocity of all neighbors */
-		neighborVelocity = new Velocity(cumulativeNeighborAngle
-				/ neighbors.size(), cumulativeNeighborSpeed / neighbors.size());
+		if (neighbors.size() > 0) {
+			ListIterator<Boid> neighborsIterator = neighbors.listIterator();
 
-		/* average location of all neighbors */
-		neighborLocation = new Location(cumulativeNeighborX / neighbors.size(),
-				cumulativeNeighborY / neighbors.size());
+			/* cumulative coordinates for our neighbors, potential collisions */
+			double cumNeighborX = 0, cumNeighborY = 0, cumNeighborAngle = 0, cumNeighborSpeed = 0;
+			double cumCollisionX = 0, cumCollisionY = 0, cumCollisionAngle = 0, cumCollisionSpeed = 0;
 
-		/* average location of potential crashes */
-		crashLocation = new Location(cumulativeCrashX / crashCount,
-				cumulativeCrashY / crashCount);
+			/* how many potential collisions are present */
+			int crashCount = 0;
 
-		/*
-		 * start calculating the new heading as the weighted sum of the heading
-		 * towards the average neighbor location and the average heading of all
-		 * neighbors
-		 */
-		newHeading = environment.getFriendsWeight()
-				* (Formulae.heading(location, neighborLocation))
-				+ environment.getFlowWeight() * neighborVelocity.getAngle();
-		weight = environment.getFriendsWeight() + environment.getFlowWeight();
-
-		if (!environment.wrapAround()) {
 			/*
-			 * if our next step on our current heading is outside of the canvas,
-			 * add the weighted heading back towards the center of the canvas
+			 * examine neighbors to identify potential collisions, calculate
+			 * centers of mass, direction for neighbors and potential collisions
 			 */
-			if (nextLocation.getX() < environment.getWallMargin()
-					|| nextLocation.getX() > canvas.getWidth()
-							- environment.getWallMargin()
-					|| nextLocation.getY() < environment.getWallMargin()
-					|| nextLocation.getY() > canvas.getHeight()
-							- environment.getWallMargin()) {
-				newHeading += environment.getWallWeight()
-						* Formulae.heading(location, canvasCenter);
-				weight += environment.getWallWeight();
+			while (neighborsIterator.hasNext()) {
+				Boid b = neighborsIterator.next();
+				cumNeighborX += b.getX();
+				cumNeighborY += b.getY();
+				cumNeighborAngle += b.getAngle();
+				cumNeighborSpeed += b.getSpeed();
+				if (Formulae.distance(location, b.getLocation()) < environment
+						.getMaximumCollisionRadius()) {
+					crashCount++;
+					cumCollisionX += b.getX();
+					cumCollisionY += b.getY();
+					cumCollisionAngle += b.getAngle();
+					cumCollisionSpeed += b.getSpeed();
+				}
+			}
+
+			/*
+			 * calculate average centers of mass, velocity for neighbors,
+			 * potential collisions
+			 */
+			Location neighborLocation = new Location(cumNeighborX
+					/ neighbors.size(), cumNeighborY / neighbors.size());
+			Velocity neighborVelocity = new Velocity(cumNeighborAngle
+					/ neighbors.size(), cumNeighborSpeed / neighbors.size());
+
+			/* factor weighted rules into new bearing */
+			weight += environment.getFriendsWeight();
+			newBearing += environment.getFriendsWeight()
+					* Formulae.bearing(location, neighborLocation);
+			weight += environment.getFlowWeight();
+			newBearing += environment.getFlowWeight()
+					* neighborVelocity.getAngle();
+			weight += environment.getStayInBoundsWeight();
+			newBearing += environment.getStayInBoundsWeight()
+					* headingToStayInBounds();
+			if (crashCount > 0) { // avoid divide by zero errors
+				Location collisionLocation = new Location(cumCollisionX
+						/ crashCount, cumCollisionY / crashCount);
+				Velocity collisionVelocity = new Velocity(cumCollisionAngle
+						/ crashCount, cumCollisionSpeed / crashCount);
+				weight += environment.getAvoidCollisionWeight();
+				newBearing += environment.getAvoidCollisionWeight()
+						* ((Formulae.bearing(location, collisionLocation) + Math.PI) % (Math.PI * 2));
 			}
 		}
+
 		/*
-		 * if we are in danger of crashing into any other boids add the weighted
-		 * heading directly away from the average location of our potential
-		 * crashes
+		 * calculate final newBearing by taking average based on weights of
+		 * rules applied
 		 */
-		if (crashCount > 0) {
-			newHeading += environment.getCrashWeight()
-					* Formulae.heading(location, crashLocation) + Math.PI;
-			weight += environment.getCrashWeight();
-		}
-
-		/* normalize our new weighted heading into just a heading */
-		if (weight > 0) {
-			newHeading = newHeading / weight;
-		} else {
-			newHeading = velocity.getAngle();
-		}
+		newBearing /= weight;
 
 		/*
-		 * adjust our current heading towards the new heading, within the limits
-		 * of our maximum turn angle
+		 * FIXME If the boid hits the center of the right side of the
+		 * environment at a heading close enough to zero radians, it may
+		 * oscillate back and forth trying to get to the heading PI... and end
+		 * up leaving the screen.
 		 */
-		if (Math.abs(velocity.getAngle() - newHeading) < environment
-				.getMaximumTurnAngle()) {
-			velocity.setAngle(newHeading);
-		} else if (newHeading < velocity.getAngle()) {
+		/*
+		 * calculate actual new bearing with a limit on the maximum amount the
+		 * boid can turn
+		 */
+		double turnToNewBearing = Math.PI
+				- Math.abs(Math.abs(velocity.getAngle() - newBearing) - Math.PI);
+		if (turnToNewBearing < environment.getMaximumBearingChange()) {
+			velocity.setAngle(newBearing);
+		} else if (Math.abs((velocity.getAngle() + environment
+				.getMaximumBearingChange()) % (Math.PI * 2) - newBearing) < Math
+				.abs((velocity.getAngle() - environment
+						.getMaximumBearingChange())
+						% (Math.PI * 2)
+						- newBearing)) {
 			velocity.setAngle(velocity.getAngle()
-					- environment.getMaximumTurnAngle());
+					+ environment.getMaximumBearingChange());
 		} else {
 			velocity.setAngle(velocity.getAngle()
-					+ environment.getMaximumTurnAngle());
+					- environment.getMaximumBearingChange());
 		}
 
-		// TODO adjust current speed to "go with the flow"
+		location = nextLocation();
 
-		location = Formulae.endPoint(location, velocity);
-		if (environment.wrapAround()) {
-			double newX = location.getX();
-			double newY = location.getY();
-			if (newX < 0) {
-				newX = canvas.getWidth() + newX;
-			} else if (newX > canvas.getWidth()) {
-				newX = newX % canvas.getWidth();
+	}
+
+	/**
+	 * 
+	 * @return next location (if wrap-around is enabled, wrap-around on the
+	 *         edges of the environment)
+	 */
+	private Location nextLocation() {
+		Location nextLocation = Formulae.endPoint(location, velocity);
+		if (environment.isWrapAround()) {
+			if (nextLocation.getX() < 0) {
+				nextLocation = new Location(canvas.getWidth()
+						+ nextLocation.getX(), nextLocation.getY());
+			} else if (nextLocation.getX() > canvas.getWidth()) {
+				nextLocation = new Location(nextLocation.getX()
+						- canvas.getWidth(), nextLocation.getY());
 			}
-			if (newY < 0) {
-				newY = canvas.getHeight() + newY;
-			} else if (newY > canvas.getHeight()) {
-				newY = newY % canvas.getHeight();
+			if (nextLocation.getY() < 0) {
+				nextLocation = new Location(nextLocation.getX(),
+						canvas.getHeight() + location.getY());
+			} else if (nextLocation.getY() > canvas.getHeight()) {
+				nextLocation = new Location(nextLocation.getX(),
+						nextLocation.getY() - canvas.getHeight());
 			}
-			location = new Location(newX, newY);
 		}
+		return nextLocation;
+	}
+
+	private double headingToStayInBounds() {
+		Location canvasCenter = new Location(canvas.getWidth() / 2,
+				canvas.getHeight() / 2);
+		Location nextLocation = Formulae.endPoint(location, velocity);
+
+		/*
+		 * if our next step on our current heading is outside of the canvas,
+		 * calculate a heading back towards the center of the canvas
+		 */
+		if (nextLocation.getX() < environment.getWallMargin()
+				|| nextLocation.getX() > (canvas.getWidth() - environment
+						.getWallMargin())
+				|| nextLocation.getY() < environment.getWallMargin()
+				|| nextLocation.getY() > (canvas.getHeight() - environment
+						.getWallMargin())) {
+			return Formulae.bearing(location, canvasCenter);
+		}
+
+		return velocity.getAngle();
 	}
 
 	public Location getLocation() {
