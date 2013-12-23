@@ -5,17 +5,17 @@ import objectdraw.*;
 @SuppressWarnings("serial")
 public class Environment extends WindowController {
 
-	private static final int CANVAS_WIDTH = 1600;
-	private static final int CANVAS_HEIGHT = 900;
+	private static final int CANVAS_WIDTH = 800;
+	private static final int CANVAS_HEIGHT = 800;
 
-	private double iconWidth = 8;
+	private double iconWidth = 10;
 	private double iconHeight = iconWidth;
 
 	private double stepDelay = 10;
 	private double iconRefreshDelay = stepDelay;
 	private boolean captionsEnabled = false;
 
-	private int flockSize = 250;
+	private int flockSize = 100;
 
 	private double minimumSpeed = 1;
 	private double maximumSpeed = 3;
@@ -27,10 +27,10 @@ public class Environment extends WindowController {
 	private int subflockSize = -1; /* TODO value > 0 limits size of subflock */
 
 	private double maximumCollisionRadius = 50;
-	private double wallMargin = 50;
+	private double wallMargin = 100;
 	private boolean wrapAround = true;
 
-	private double stayInBoundsWeight = 0;
+	private double stayInBoundsWeight = 1;
 	private double avoidCollisionWeight = 2;
 	private double friendsWeight = 2;
 	private double flowWeight = 1;

@@ -6,14 +6,15 @@ public class Icon extends ActiveObject {
 
 	private Boid boid;
 	private Environment environment;
-	private FilledOval icon;
+	private Line left, right, bottom;
 	private Text caption1, caption2;
 
 	public Icon(Boid boid, Environment environment, DrawingCanvas canvas) {
 		this.boid = boid;
 		this.environment = environment;
-		icon = new FilledOval(boid.getLocation(), environment.getIconWidth(),
-				environment.getIconHeight(), canvas);
+		left = new Line(boid.getLocation(), boid.getLocation(), canvas);
+		right = new Line(boid.getLocation(), boid.getLocation(), canvas);
+		bottom = new Line(boid.getLocation(), boid.getLocation(), canvas);
 		caption1 = new Text("", boid.getLocation(), canvas);
 		caption2 = new Text("", boid.getLocation(), canvas);
 		if (!environment.isCaptionsEnabled()) {
@@ -25,7 +26,12 @@ public class Icon extends ActiveObject {
 
 	public void run() {
 		while (boid.isUpdating()) {
-			icon.moveTo(boid.getLocation());
+			left.setStart(boid.getX() + environment.getIconHeight() / 2 * Math.cos(boid.getAngle()), boid.getY() + environment.getIconHeight() / 2 * Math.sin(boid.getAngle()));
+			left.setEnd(boid.getX() - environment.getIconHeight() / 2 * Math.cos(boid.getAngle()) - environment.getIconWidth() / 2 * Math.cos(Math.PI / 2 - boid.getAngle()), boid.getY() - environment.getIconHeight() / 2 * Math.sin(boid.getAngle()) + environment.getIconWidth() / 2 * Math.sin(Math.PI / 2 - boid.getAngle()));
+			bottom.setStart(left.getEnd());
+			bottom.setEnd(boid.getX() - environment.getIconHeight() / 2 * Math.cos(boid.getAngle()) + environment.getIconWidth() / 2 * Math.cos(Math.PI / 2 - boid.getAngle()), boid.getY() - environment.getIconWidth() / 2 * Math.sin(boid.getAngle()) - environment.getIconWidth() / 2 * Math.sin(Math.PI / 2 - boid.getAngle()));
+			right.setStart(bottom.getEnd());
+			right.setEnd(left.getStart());
 			if (environment.isCaptionsEnabled()) {
 				caption1.setText(String.format("(%.1f, %.1f)", boid.getX(), boid.getY()));
 				caption2.setText(String.format("angle = %.1f / speed = %.1f", boid.getAngle(), boid.getSpeed()));
