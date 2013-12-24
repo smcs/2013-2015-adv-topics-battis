@@ -25,13 +25,26 @@ public class Icon extends ActiveObject {
 	}
 
 	public void run() {
+		double x1, y1, x2, y2, x3, y3;
+		double theta1, theta2, theta3;
+		double r = Formulae.distance(0, 0, environment.getIconWidth() / 2, environment.getIconHeight() / 2);
 		while (boid.isUpdating()) {
-			left.setStart(boid.getX() + environment.getIconHeight() / 2 * Math.cos(boid.getAngle()), boid.getY() + environment.getIconHeight() / 2 * Math.sin(boid.getAngle()));
-			left.setEnd(boid.getX() - environment.getIconHeight() / 2 * Math.cos(boid.getAngle()) - environment.getIconWidth() / 2 * Math.cos(Math.PI / 2 - boid.getAngle()), boid.getY() - environment.getIconHeight() / 2 * Math.sin(boid.getAngle()) + environment.getIconWidth() / 2 * Math.sin(Math.PI / 2 - boid.getAngle()));
+			theta1 = Math.acos(environment.getIconHeight() / 2 / r);
+			theta2 = boid.getAngle() - theta1;
+			theta3 = Math.PI - (boid.getAngle() + theta1);
+			x1 = boid.getX() + environment.getIconHeight() / 2 * Math.cos(boid.getAngle());
+			y1 = boid.getY() + environment.getIconHeight() / 2 * Math.sin(boid.getAngle());
+			x2 = boid.getX() - r * Math.cos(theta2);
+			y2 = boid.getY() - r * Math.sin(theta2);
+			x3 = boid.getX() + r * Math.cos(theta3);
+			y3 = boid.getY() - r * Math.sin(theta3);
+			left.setStart(x1, y1);
+			left.setEnd(x2, y2);
 			bottom.setStart(left.getEnd());
-			bottom.setEnd(boid.getX() - environment.getIconHeight() / 2 * Math.cos(boid.getAngle()) + environment.getIconWidth() / 2 * Math.cos(Math.PI / 2 - boid.getAngle()), boid.getY() - environment.getIconWidth() / 2 * Math.sin(boid.getAngle()) - environment.getIconWidth() / 2 * Math.sin(Math.PI / 2 - boid.getAngle()));
+			bottom.setEnd(x3, y3);
 			right.setStart(bottom.getEnd());
 			right.setEnd(left.getStart());
+			
 			if (environment.isCaptionsEnabled()) {
 				caption1.setText(String.format("(%.1f, %.1f)", boid.getX(), boid.getY()));
 				caption2.setText(String.format("angle = %.1f / speed = %.1f", boid.getAngle(), boid.getSpeed()));
