@@ -22,8 +22,12 @@ public class Flock extends ActiveObject {
 	public void run() {
 		for (int steps = 0; environment.getDuration() < 0
 				|| steps < environment.getDuration(); steps++) {
-			for (int i = 0; i < flock.size(); i++) {
-				flock.get(i).step();
+			if (environment.isPaused()) {
+				steps --;
+			} else {
+				for (int i = 0; i < flock.size(); i++) {
+					flock.get(i).step();
+				}
 			}
 			pause(environment.getStepDelay());
 		}

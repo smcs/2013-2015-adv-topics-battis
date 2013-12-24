@@ -1,5 +1,8 @@
 package boids;
 
+import java.awt.*;
+import java.util.*;
+
 import objectdraw.*;
 
 public class Formulae {
@@ -68,4 +71,23 @@ public class Formulae {
 	public static double bearing(double x1, double y1, double x2, double y2) {
 		return Math.atan2(y2 - y1, x2 - x1) % (Math.PI * 2);
 	}
+	
+	public static Color generateRandomColor() {
+		Color mix = new Color(255, 255, 255);
+	    Random generator = new Random();
+	    int red = generator.nextInt() % 256;
+	    int green = generator.nextInt() % 256;
+	    int blue = generator.nextInt() % 256;
+
+	    // mix the color
+	    if (mix != null) {
+	        red = (red + mix.getRed()) / 2;
+	        green = (green + mix.getGreen()) / 2;
+	        blue = (blue + mix.getBlue()) / 2;
+	    }
+
+	    Color color = new Color(red, green, blue);
+	    return color;
+	}
+
 }

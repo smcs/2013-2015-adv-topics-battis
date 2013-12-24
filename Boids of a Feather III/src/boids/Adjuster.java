@@ -31,10 +31,17 @@ public class Adjuster extends ActiveObject implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_B:
-		case KeyEvent.VK_C:
-		case KeyEvent.VK_F:
-		case KeyEvent.VK_L:
+		case KeyEvent.VK_P: // ca[P]tions
+			environment.toggleCaptions();
+			break;
+		case KeyEvent.VK_SPACE:
+			environment.togglePaused();
+		case KeyEvent.VK_B: // stay in-[B]ounds
+		case KeyEvent.VK_C: // avoid [C]ollisions
+		case KeyEvent.VK_F: // find [F]riends
+		case KeyEvent.VK_L: // go with the f[L]ow
+		case KeyEvent.VK_W: // icon [W]idth
+		case KeyEvent.VK_H: // icon [H]eight
 			modifier = e.getKeyCode();
 			break;
 		case KeyEvent.VK_UP:
@@ -50,6 +57,12 @@ public class Adjuster extends ActiveObject implements KeyListener {
 				break;
 			case KeyEvent.VK_L:
 				environment.incrementFlowWeight(BIG_INCREMENT);
+				break;
+			case KeyEvent.VK_W:
+				environment.incrementIconWidth(BIG_INCREMENT);
+				break;
+			case KeyEvent.VK_H:
+				environment.incrementIconHeight(BIG_INCREMENT);
 				break;
 			}
 			break;
@@ -67,6 +80,12 @@ public class Adjuster extends ActiveObject implements KeyListener {
 			case KeyEvent.VK_L:
 				environment.incrementFlowWeight(-BIG_INCREMENT);
 				break;
+			case KeyEvent.VK_W:
+				environment.incrementIconWidth(-BIG_INCREMENT);
+				break;
+			case KeyEvent.VK_H:
+				environment.incrementIconHeight(-BIG_INCREMENT);
+				break;
 			}
 			break;
 		case KeyEvent.VK_LEFT:
@@ -83,6 +102,12 @@ public class Adjuster extends ActiveObject implements KeyListener {
 			case KeyEvent.VK_L:
 				environment.incrementFlowWeight(-SMALL_INCREMENT);
 				break;
+			case KeyEvent.VK_W:
+				environment.incrementIconWidth(-SMALL_INCREMENT);
+				break;
+			case KeyEvent.VK_H:
+				environment.incrementIconHeight(-SMALL_INCREMENT);
+				break;
 			}
 			break;
 		case KeyEvent.VK_RIGHT:
@@ -98,6 +123,12 @@ public class Adjuster extends ActiveObject implements KeyListener {
 				break;
 			case KeyEvent.VK_L:
 				environment.incrementFlowWeight(SMALL_INCREMENT);
+				break;
+			case KeyEvent.VK_W:
+				environment.incrementIconWidth(SMALL_INCREMENT);
+				break;
+			case KeyEvent.VK_H:
+				environment.incrementIconHeight(SMALL_INCREMENT);
 				break;
 			}
 			break;

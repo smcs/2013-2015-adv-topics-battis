@@ -1,6 +1,7 @@
 package boids;
 
 import objectdraw.*;
+import java.awt.*;
 
 public class Icon extends ActiveObject {
 
@@ -21,14 +22,20 @@ public class Icon extends ActiveObject {
 			caption1.hide();
 			caption2.hide();
 		}
+		Color myColor = Formulae.generateRandomColor();
+		left.setColor(myColor);
+		right.setColor(myColor);
+		bottom.setColor(myColor);
+		caption1.setColor(myColor);
+		caption2.setColor(myColor);
 		start();
 	}
 
 	public void run() {
 		double x1, y1, x2, y2, x3, y3;
-		double theta1, theta2, theta3;
-		double r = Formulae.distance(0, 0, environment.getIconWidth() / 2, environment.getIconHeight() / 2);
+		double theta1, theta2, theta3, r;
 		while (boid.isUpdating()) {
+			r = Formulae.distance(0, 0, environment.getIconWidth() / 2, environment.getIconHeight() / 2);
 			theta1 = Math.acos(environment.getIconHeight() / 2 / r);
 			theta2 = boid.getAngle() - theta1;
 			theta3 = Math.PI - (boid.getAngle() + theta1);
@@ -47,7 +54,7 @@ public class Icon extends ActiveObject {
 			
 			if (environment.isCaptionsEnabled()) {
 				caption1.setText(String.format("(%.1f, %.1f)", boid.getX(), boid.getY()));
-				caption2.setText(String.format("angle = %.1f / speed = %.1f", boid.getAngle(), boid.getSpeed()));
+				caption2.setText(String.format("angle = %.2f / speed = %.1f", boid.getAngle(), boid.getSpeed()));
 				caption1.moveTo(boid.getX() + environment.getIconWidth(), boid.getY());
 				caption2.moveTo(boid.getX() + environment.getIconWidth(), boid.getY() + 15);
 				if (caption1.isHidden()) {

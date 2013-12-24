@@ -1,6 +1,7 @@
 package boids;
 
 import objectdraw.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class Environment extends WindowController {
@@ -14,12 +15,14 @@ public class Environment extends WindowController {
 	private double stepDelay = 10;
 	private double iconRefreshDelay = stepDelay;
 	private boolean captionsEnabled = false;
+	private Color textColor = Color.black;
 
 	private int flockSize = 100;
 
 	private double minimumSpeed = 1;
 	private double maximumSpeed = 3;
 	private double maximumBearingChange = Math.PI / 180;
+	private boolean pauseEnabled = false;
 	private int duration = -1; /*
 								 * value > 0 limits number of simulated steps
 								 */
@@ -134,5 +137,29 @@ public class Environment extends WindowController {
 
 	public void incrementFlowWeight(double increment) {
 		flowWeight += increment;
+	}
+
+	public void incrementIconWidth(double increment) {
+		iconWidth += increment;
+	}
+
+	public void incrementIconHeight(double increment) {
+		iconHeight += increment;
+	}
+
+	public void toggleCaptions() {
+		captionsEnabled = !captionsEnabled;
+	}
+
+	public boolean isPaused() {
+		return pauseEnabled;
+	}
+
+	public void togglePaused() {
+		pauseEnabled = !pauseEnabled;
+	}
+	
+	public Color getTextColor() {
+		return textColor;
 	}
 }
