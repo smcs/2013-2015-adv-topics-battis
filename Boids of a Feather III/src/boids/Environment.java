@@ -41,6 +41,7 @@ public class Environment extends WindowController {
 		this.setSize(CANVAS_WIDTH, CANVAS_HEIGHT);
 		flock = new Flock(this, canvas);
 		new StatusDisplay(flock, this, canvas);
+		new Adjuster(flock, this, canvas);
 	}
 
 	public double getIconWidth() {
@@ -117,5 +118,21 @@ public class Environment extends WindowController {
 
 	public double getFlowWeight() {
 		return flowWeight;
+	}
+
+	public void incrementStayInBoundsWeight(double increment) {
+		stayInBoundsWeight += increment;
+	}
+
+	public void incremementAvoidCollisionWeight(double increment) {
+		avoidCollisionWeight += increment;
+	}
+
+	public void incrementFriendsWeight(double increment) {
+		friendsWeight += increment;
+	}
+
+	public void incrementFlowWeight(double increment) {
+		flowWeight += increment;
 	}
 }

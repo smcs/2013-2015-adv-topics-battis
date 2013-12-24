@@ -28,13 +28,13 @@ public class StatusDisplay extends ActiveObject {
 
 	public void run() {
 		while (flock.isUpdating()) {
-			wallWeight.setText(environment.getStayInBoundsWeight() + " * stay in-bounds");
+			wallWeight.setText(environment.getStayInBoundsWeight() + " * stay in-[B]ounds");
 			crashWeight.setText(environment.getAvoidCollisionWeight()
-					+ " * avoid crashes");
+					+ " * avoid [C]rashes");
 			friendsWeight.setText(environment.getFriendsWeight()
-					+ " * find friends");
+					+ " * find [F]riends");
 			flowWeight.setText(environment.getFlowWeight()
-					+ " * go with the flow");
+					+ " * go with the f[L]ow");
 			pause(environment.getIconRefreshDelay());
 		}
 	}
