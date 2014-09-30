@@ -1,0 +1,28 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class Circle extends ActiveObject {
+
+	private FilledOval circle;
+	private Location center;
+	private double radius;
+	private boolean expanding;
+
+	public Circle(Location center, DrawingCanvas canvas) {
+		this.center = center;
+		radius = 1;
+		circle = new FilledOval(center.getX() + radius, center.getY() + radius,
+				radius * 2, radius * 2, canvas);
+		expanding = true;
+		start();
+	}
+
+	public void run() {
+		while (expanding) {
+			radius++;
+			circle.move(-1, -1);
+			circle.setSize(radius * 2, radius * 2);
+			pause(100);
+		}
+	}
+}

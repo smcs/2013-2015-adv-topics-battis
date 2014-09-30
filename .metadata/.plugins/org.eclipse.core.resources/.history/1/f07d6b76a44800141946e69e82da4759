@@ -1,0 +1,7 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class CircleCollection {
+
+	private Circle circles[];
+}

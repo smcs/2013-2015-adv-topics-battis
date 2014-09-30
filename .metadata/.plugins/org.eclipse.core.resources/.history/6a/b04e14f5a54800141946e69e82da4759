@@ -1,0 +1,18 @@
+import objectdraw.*;
+
+import java.awt.*;
+
+public class CircleCollection {
+
+	private Circle circles[];
+
+	public boolean available(Location click) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void add(Location click) {
+		// TODO Auto-generated method stub
+		
+	}
+}

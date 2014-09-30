@@ -1,0 +1,6 @@
+import objectdraw.FilledOval;
+
+
+public class FilledCircle extends FilledOval {
+
+}

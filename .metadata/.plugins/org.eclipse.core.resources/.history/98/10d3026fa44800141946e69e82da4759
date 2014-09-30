@@ -1,0 +1,11 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class ExpandingCircles extends WindowController {
+
+	private CircleCollection circles;
+	
+	public void onMouseClick(Location click) {
+		
+	}
+}
