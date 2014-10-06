@@ -7,3 +7,8 @@ org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=src
 org.eclipse.jdt.core.classpathVariable.JUNIT_HOME=/Applications/eclipse/plugins/org.junit_4.11.0.v201303080030/
 org.eclipse.jdt.core.classpathVariable.JUNIT_SRC_HOME=/Applications/eclipse/plugins/org.junit.source_4.11.0.v201303080030.jar
 org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
+<<<<<<< HEAD
+=======
+org.eclipse.jdt.core.userLibrary.GridWorld=<?xml version\="1.0" encoding\="UTF-8"?>\n<userlibrary systemlibrary\="false" version\="2">\n\t<archive path\="/Libraries/GridWorldCode/gridworld.jar">\n\t\t<attributes>\n\t\t\t<attribute name\="javadoc_location" value\="file\:./Libraries/GridWorldCode/javadoc/"/>\n\t\t</attributes>\n\t</archive>\n</userlibrary>\n
+org.eclipse.jdt.core.userLibrary.ObjectDraw\ 1.1.2=<?xml version\="1.0" encoding\="UTF-8"?>\n<userlibrary systemlibrary\="false" version\="2">\n\t<archive path\="/Libraries/objectdrawV1.1.2.jar">\n\t\t<attributes>\n\t\t\t<attribute name\="javadoc_location" value\="http\://eventfuljava.cs.williams.edu/library/objectdrawJavadocV1.1.2/"/>\n\t\t</attributes>\n\t</archive>\n</userlibrary>\n
+>>>>>>> 4f8445d2060771434d750f07951e52be2488b60c

@@ -1,0 +1,22 @@
+import objectdraw.*;
+
+import java.awt.*;
+
+public class CircleCollection {
+
+	private Circle circles[];
+	private DrawingCanvas canvas;
+
+	public CircleCollection(DrawingCanvas canvas) {
+		this.canvas = canvas;
+	}
+	
+	public boolean available(Location click) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public void add(Location click) {
+		new Circle(click, canvas);
+	}
+}

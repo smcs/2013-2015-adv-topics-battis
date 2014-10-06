@@ -1,0 +1,23 @@
+import objectdraw.*;
+import java.awt.*;
+import java.util.*;
+
+public class CircleCollection {
+
+	private Vector<Circle> circles;
+	private DrawingCanvas canvas;
+
+	public CircleCollection(DrawingCanvas canvas) {
+		this.canvas = canvas;
+		circles = new Vector<Circle>();
+	}
+	
+	public boolean available(Location click) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public void add(Location click) {
+		circles.add(new Circle(click, canvas));
+	}
+}

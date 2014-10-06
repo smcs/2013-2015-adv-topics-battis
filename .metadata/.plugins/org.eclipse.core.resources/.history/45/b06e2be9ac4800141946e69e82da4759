@@ -1,0 +1,10 @@
+import objectdraw.*;
+import java.awt.*;
+
+public class ExpandingCirclesController extends WindowController {
+	
+	public void onMouseClick(Location click) {
+		new FramedOval(click, 100, 100, canvas);
+	}
+
+}
