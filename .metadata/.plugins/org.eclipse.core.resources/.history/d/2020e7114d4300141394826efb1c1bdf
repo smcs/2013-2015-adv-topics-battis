@@ -1,0 +1,14 @@
+
+public class Starsa {
+
+	public static void main(String[] args) {
+
+		for (int row = 0; row < 7; row++) {
+			for (int spaces = 0; spaces < row; spaces++) {
+				System.out.print("*");
+			}
+			System.out.println(" ");
+		}
+	}
+
+}

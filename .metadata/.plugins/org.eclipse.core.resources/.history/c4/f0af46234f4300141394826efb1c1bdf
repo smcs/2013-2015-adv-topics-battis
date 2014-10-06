@@ -1,0 +1,18 @@
+public class Starsa {
+
+	public static void stars(int n) {
+		for (int row = 0; row < n; row++) {
+			for (int spaces = 0; spaces < row; spaces++) {
+				System.out.print(" ");
+			}
+			System.out.println("*");
+		}
+	}
+	
+	public static void main(String[] args) {
+		stars(1);
+		stars(3);
+		stars(17);
+		stars(240003);
+	}
+}
