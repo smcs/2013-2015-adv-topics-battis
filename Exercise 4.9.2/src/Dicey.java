@@ -26,22 +26,23 @@ public class Dicey extends WindowController {
 
 	public void onMouseClick(Location point) {
 		// Roll dice and display rolls and result die1 = dieGen.nextValue();
+		die1 = dieGen.nextValue();
 		die2 = dieGen.nextValue();
 		die3 = dieGen.nextValue();
 		roll.setText("You rolled " + die1 + ", " + die2 + " and " + die3);
 		if (die1 == die2) {
 			if (die1 == die3) {
 				// 3 of a kind
-				result.setText("You rolled three " + die1 + "s!");
+				result.setText("You rolled three " + die1 + "'s!");
 			} else {// One pair
-				result.setText("You rolled a pair of " + die1 + "s!");
+				result.setText("You rolled a pair of " + die1 + "'s!");
 			}
 		} else if (die1 == die3) {
 			// One pair
-			result.setText("You rolled a pair of " + die1 + "s");
+			result.setText("You rolled a pair of " + die1 + "'s");
 		} else if (die2 == die3) {
 			// One pair
-			result.setText("You rolled a pair of " + die2 + "s");
+			result.setText("You rolled a pair of " + die2 + "'s");
 		} else {// Nothing!
 			result.setText("You did not roll anything interesting!");
 		}
